@@ -1,0 +1,2 @@
+# changman
+Hangman in C
