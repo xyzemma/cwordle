@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
+#include "readstr.h"
 
 char wordlist[10][6];
 
@@ -10,6 +11,17 @@ char *chooseword() {
     char *word = malloc(6);
     word = wordlist[r];
     return word;
+}
+
+int play(char *word) {
+    char* guess;
+    while(1) {
+        guess = read_string();
+        if(strlen(guess)!=5) {
+            fprintf(stderr, "Guess must be 5 Characters long");
+            continue;
+        }
+    }
 }
 
 int main() {
