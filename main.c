@@ -24,16 +24,57 @@ int play(char *word) {
     while(1) {
         printf("Guess: ");
         guess = read_string();
+        if(guess==NULL) {
+            exit(1);
+        }
         if(strlen(guess)!=5) {
             fprintf(stderr, "Guess must be 5 Characters long\n");
             continue;
         }
-        if(guess==word) {
-            fprintf(stdout,"You Won!");
-            break;
+        if(strcmp(guess, word)==0) {
+            fprintf(stdout,"You Won!\n");
+            printf("Play again? (y|n) ");
+            char* input = read_string();
+            char* ycap = malloc(1);
+            char* ylow = malloc(1);
+            if(input==NULL||ycap==NULL||ylow==NULL) {
+                exit(1);
+            }
+            *ycap = 'Y';
+            *ylow = 'y';
+            if(strcmp(input,ycap)==0 || strcmp(input, ylow)==0) {
+                free(ycap);
+                free(ylow);
+                free(input);
+                play(chooseword());
+            } else {
+                free(ycap);
+                free(ylow);
+                free(input);
+                exit(0);
+            }
         } else if(guessnum>=4) {
             printf("You Lost. The word was: %s\n",word);
-            break;
+            printf("Play again? (y|n) ");
+            char* input = read_string();
+            char* ycap = malloc(1);
+            char* ylow = malloc(1);
+            *ycap = 'Y';
+            *ylow = 'y';
+            if(input==NULL||ycap==NULL||ylow==NULL) {
+                exit(1);
+            }
+            if(strcmp(input,ycap)==0 || strcmp(input, ylow)==0) {
+                free(ycap);
+                free(ylow);
+                free(input);
+                play(chooseword());
+            } else {
+                free(ycap);
+                free(ylow);
+                free(input);
+                exit(0);
+            }
         } else {
             guessnum++;
             char output[6];
@@ -47,6 +88,7 @@ int play(char *word) {
                     output[i] = 'x';
                 }
             }
+            free(guess);
             printf("%s\n",output);
             
         }
